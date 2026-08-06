@@ -12,5 +12,13 @@ int main(){
 
     printf("Digite sua idade: \n");
     scanf("%d", &idade);
-    printf("Caramba, você tem %d anos de idade? que maneiro!", idade);
+    printf("Caramba, você tem %d anos de idade? que maneiro!\n", idade);
+
+    if (idade >= 18) {
+        printf("Você é maior de idade!");
+    }
+
+    else {
+        printf("Você é menor de idade!");
+    }
 }
