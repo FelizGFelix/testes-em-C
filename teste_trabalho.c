@@ -9,7 +9,7 @@ int main(){
     int escolha = 0;
 
     printf("Bem-vindo ao sistema de cadastro de funcionários da Hells Market!\n");
-    printf("Escolha uma das opções: \n");
+    printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n");
     scanf("%d", &escolha);
 
 
