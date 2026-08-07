@@ -46,9 +46,14 @@ void cadastrar(){
     scanf("%*c");
     fgets(estado, sizeof(estado), stdin);
 
+    int num_cod = rand()%100;
+
+
     printf("Cadastro concluído!\n");
+    printf("Seu número identificador é de: %d\n", num_cod);
     printf("Digite qualquer valor para retornar: ");
     scanf("%s", retornar);
+    limpar();
 }
 
 int main(){
@@ -64,10 +69,6 @@ int main(){
 
         if (escolha == 1){
             cadastrar();
-        }
-
-        else if (escolha == 2){
-            random_number();
         }
     }
 }
