@@ -20,6 +20,13 @@ void limpar() {
     #endif
 }
 
+void remover_quebra_linha(char *str) {
+    size_t len = strlen(str);
+    if (len > 0 && str[len-1] == '\n') {
+        str[len-1] = '\0';
+    }
+}
+
 void cadastrar(){
     limpar();
     setlocale(LC_ALL, "Portuguese");
@@ -31,8 +38,8 @@ void cadastrar(){
         char nome[100];
         char cpf[14];
         float credito;
-        char endereco[500];
-        char cep[8];
+        char endereco[100];
+        char cep[9];
         char cidade[20];
         char estado[3];
     };
@@ -48,22 +55,24 @@ void cadastrar(){
     printf("Digite o seu nome: \n");
     scanf("%*c");
     fgets(funcionario.nome, sizeof(funcionario.nome), stdin);
+    remover_quebra_linha(funcionario.nome);
     printf("Digite o seu CPF: \n");
     scanf("%s", funcionario.cpf, stdin);
     printf("Digite o seu limite de crédito: \n");
     scanf("%*c");
     fgets(credito_temporario, sizeof(credito_temporario), stdin);
+    remover_quebra_linha(credito_temporario);
     printf("Digite o seu endereço: \n");
-    scanf("%*c");
     fgets(funcionario.endereco, sizeof(funcionario.endereco), stdin);
+    remover_quebra_linha(funcionario.endereco);
     printf("Digite o seu cep: \n");
-    scanf("%s", funcionario.cep);
+    scanf("%s", funcionario.cep, stdin);
     printf("Digite a sua cidade: \n");
     scanf("%*c");
     fgets(funcionario.cidade, sizeof(funcionario.cidade), stdin);
+    remover_quebra_linha(funcionario.cidade);
     printf("Digite o estado em que mora: \n");
-    scanf("%*c");
-    fgets(funcionario.estado, sizeof(funcionario.estado),stdin);
+    scanf("%s", funcionario.estado, stdin);
 
     funcionario.credito = atof(credito_temporario);
 
