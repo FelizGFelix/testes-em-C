@@ -66,7 +66,9 @@ void cadastrar(){
     fgets(funcionario.endereco, sizeof(funcionario.endereco), stdin);
     remover_quebra_linha(funcionario.endereco);
     printf("Digite o seu cep: \n");
-    scanf("%s", funcionario.cep, stdin);
+    scanf("%*c");
+    fgets(funcionario.cep, sizeof(funcionario.cep), stdin);
+    remover_quebra_linha(funcionario.cep);
     printf("Digite a sua cidade: \n");
     scanf("%*c");
     fgets(funcionario.cidade, sizeof(funcionario.cidade), stdin);
