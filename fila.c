@@ -43,16 +43,13 @@ void inserir(){
     else {
         printf("%d adicionado com sucesso!\n", elm);
     }
-
-    printf("Digite qualquer valor para retornar: ");
-    scanf("%c", &retornar);
 }
 
 void exibir(){
     limpar();
     int i;
     for (i=0;i<tam;i++){
-        printf("%d, \n", Fila[i]);
+        printf("%d, ", Fila[i]);
         i++;
     }
 
@@ -69,14 +66,20 @@ int main (){
 
         if (escolha == 1){
             inserir();
+            printf("Digite qualquer valor para retornar: ");
+            scanf("%c", &retornar);
         }   
 
         else if (escolha == 2){
             Retira();
+            printf("Digite qualquer valor para retornar: ");
+            scanf("%c", &retornar);
         }
 
         else{
             exibir();
+            printf("Digite qualquer valor para retornar: ");
+            scanf("%c", &retornar);
         }
 
     }
