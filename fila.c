@@ -23,9 +23,7 @@ void Retira(){
     }
     tam--;
 
-    printf("Digite qualquer valor para retornar: ");
-    scanf("%c", &retornar);
-    limpar();
+    printf("valor retirado com sucesso!");
 }
 
 void inserir(){
