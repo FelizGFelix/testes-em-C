@@ -6,7 +6,6 @@
 
 int Fila[_MAX];
 int tam=0;
-char retornar;
 
 void limpar() {
     #ifdef _WIN32
@@ -65,20 +64,14 @@ int main (){
 
         if (escolha == 1){
             inserir();
-            printf("Digite qualquer valor para retornar: ");
-            scanf("%c", &retornar);
         }   
 
         else if (escolha == 2){
             Retira();
-            printf("Digite qualquer valor para retornar: ");
-            scanf("%c", &retornar);
         }
 
         else{
             exibir();
-            printf("Digite qualquer valor para retornar: ");
-            scanf("%c", &retornar);
         }
 
     }
