@@ -50,7 +50,6 @@ void exibir(){
     int i;
     for (i=0;i<tam;i++){
         printf("%d, ", Fila[i]);
-        i++;
     }
 
 }
