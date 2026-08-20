@@ -6,10 +6,23 @@
 #include <time.h>
 
 /* Definição do contador*/
-int contador_id = 0;
+int funcionario_id_index = 0;
 
-void incrementar_contador(){
-    contador_id ++;
+int funcionario_id_index;
+
+
+int set_funcionario_index(int index){
+    int valor_index;
+    FILE *arquivo_index = fopen("funcionario_index.txt", "w");
+    valor_index = fprintf(arquivo_index, "%d", index);
+    fclose(arquivo_index);
+
+    return valor_index;
+}
+
+int get_funcionario_index(){
+    return 0;
+
 }
 
 void limpar() {
@@ -31,7 +44,7 @@ void cadastrar(){
     limpar();
     setlocale(LC_ALL, "Portuguese");
     
-    FILE *arquivo = fopen("funcionarios.txt", "w");
+    FILE *arquivo = fopen("funcionarios.txt", "a");
 
     struct ficha_funcionario{
         int id;
@@ -44,6 +57,8 @@ void cadastrar(){
         char estado[3];
     };
 
+
+    funcionario_id_index++;
     struct ficha_funcionario funcionario;
     
     char retornar[]= "";
@@ -78,8 +93,8 @@ void cadastrar(){
 
     funcionario.credito = atof(credito_temporario);
 
-    incrementar_contador();
-    funcionario.id = contador_id;
+
+    funcionario.id = funcionario_id_index;
 
     fprintf(arquivo, "%d,", funcionario.id);
     fprintf(arquivo, "%s,", funcionario.nome);
@@ -89,9 +104,11 @@ void cadastrar(){
     fprintf(arquivo, "%s,", funcionario.cep);
     fprintf(arquivo, "%s,", funcionario.cidade);
     fprintf(arquivo, "%s", funcionario.estado);
-
+    fprintf(arquivo, "%s", "\n");
 
     fclose(arquivo);
+
+    set_funcionario_index(funcionario_id_index);
 
     printf("Cadastro concluído!\n");
     printf("Digite qualquer valor para retornar: ");
@@ -99,10 +116,12 @@ void cadastrar(){
     limpar();
 }
 
+
 int main(){
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
     int escolha = 0;
+    int index_pego;
 
     while (true){
         printf("Bem-vindo ao sistema de funcionários da Hells Market!\n");
@@ -113,5 +132,6 @@ int main(){
         if (escolha == 1){
             cadastrar();
         }
+
     }
 }
