@@ -7,7 +7,7 @@
 
     struct ficha_funcionario{
         char nome[100];
-        char cpf[14];
+        char cpf[16];
         float credito;
         char endereco[100];
         char cep[9];
@@ -112,7 +112,7 @@ void excluir_cadastro(){
         char cpf_atual[14];
         char nome[100];
         
-        sscanf(linha, "%[^,],%[^,],", nome, cpf_atual);
+        sscanf(linha, "%99[^,],%15[^,],", nome, cpf_atual);
         
         if (strcmp(cpf_buscar, cpf_atual) != 0) {
             fprintf(temporario, "%s", linha);
