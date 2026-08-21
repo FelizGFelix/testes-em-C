@@ -72,9 +72,9 @@ void cadastrar(){
 
     funcionario.credito = atof(credito_temporario);
 
-    fseek(arquivo, funcionario.id++, SEEK_END);
+    fseek(arquivo, ++funcionario.id, SEEK_END);
     fprintf(arquivo, "%d, ", funcionario.id);
-
+    
     fprintf(arquivo, "%s,", funcionario.nome);
     fprintf(arquivo, "%s,", funcionario.cpf);
     fprintf(arquivo, "%f,", funcionario.credito);
