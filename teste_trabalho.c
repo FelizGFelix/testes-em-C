@@ -10,7 +10,7 @@
         char cpf[16];
         float credito;
         char endereco[100];
-        char cep[9];
+        char cep[16];
         char cidade[20];
         char estado[3];
     };
