@@ -5,6 +5,15 @@
 #include <string.h>
 #include <time.h>
 
+    struct ficha_funcionario{
+        char nome[100];
+        char cpf[14];
+        float credito;
+        char endereco[100];
+        char cep[9];
+        char cidade[20];
+        char estado[3];
+    };
 
 void limpar() {
     #ifdef _WIN32
@@ -25,18 +34,7 @@ void cadastrar(){
     limpar();
     setlocale(LC_ALL, "Portuguese");
     
-    FILE *arquivo = fopen("funcionarios.txt", "a");
-
-    struct ficha_funcionario{
-        int id;
-        char nome[100];
-        char cpf[14];
-        float credito;
-        char endereco[100];
-        char cep[9];
-        char cidade[20];
-        char estado[3];
-    };
+    FILE *arquivo = fopen("funcionarios.txt", "a+");
 
     struct ficha_funcionario funcionario;
     
@@ -50,7 +48,7 @@ void cadastrar(){
     scanf("%*c");
     fgets(funcionario.nome, sizeof(funcionario.nome), stdin);
     remover_quebra_linha(funcionario.nome);
-    printf("Digite o seu CPF: \n");
+    printf("Digite o seu CPF (cujo esse será seu identificador): \n");
     scanf("%s", funcionario.cpf, stdin);
     printf("Digite o seu limite de crédito: \n");
     scanf("%*c");
@@ -72,9 +70,6 @@ void cadastrar(){
 
     funcionario.credito = atof(credito_temporario);
 
-    fseek(arquivo, ++funcionario.id, SEEK_END);
-    fprintf(arquivo, "%d, ", funcionario.id);
-    
     fprintf(arquivo, "%s,", funcionario.nome);
     fprintf(arquivo, "%s,", funcionario.cpf);
     fprintf(arquivo, "%f,", funcionario.credito);
@@ -84,14 +79,46 @@ void cadastrar(){
     fprintf(arquivo, "%s", funcionario.estado);
     fprintf(arquivo, "%s", "\n");
 
-
     fclose(arquivo);
-
 
     printf("Cadastro concluído!\n");
     printf("Digite qualquer valor para retornar: ");
     scanf("%s", retornar);
     limpar();
+}
+
+void excluir_cadastro(){
+    limpar();
+    char retornar[] = "";
+    FILE *arquivo, *temporario;
+    arquivo = fopen("funcionarios.txt", "r+");
+    temporario = fopen("temp.txt", "w");
+
+    char cpf_buscar[14] = "";
+
+    printf("Digite o seu CPF: \n");
+    scanf("%s", cpf_buscar);
+
+
+    struct ficha_funcionario listar;
+
+    while(fread(&listar, sizeof(struct ficha_funcionario), 1, arquivo) == 1){
+        if (cpf_buscar != listar.cpf){
+            fwrite(&listar, sizeof(struct ficha_funcionario), 1, temporario);
+        }
+    }
+
+    fclose(temporario);
+    fclose(arquivo);
+
+    remove("funcionarios.txt");
+    rename("temp.txt", "funcionarios.txt");
+
+    printf("Cadastro excluido!\n");
+    printf("Digite qualquer valor para retornar: ");
+    scanf("%s", retornar);
+    limpar();
+
 }
 
 
@@ -102,12 +129,16 @@ int main(){
 
     while (true){
         printf("Bem-vindo ao sistema de funcionários da Hells Market!\n");
-        printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n");
+        printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n2 - Excluir Cadastro\n->");
         scanf("%d", &escolha);
 
 
         if (escolha == 1){
             cadastrar();
+        }
+
+        else if (escolha == 2){
+            excluir_cadastro();
         }
 
     }
