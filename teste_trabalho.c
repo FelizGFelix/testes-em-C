@@ -40,31 +40,34 @@ void cadastrar(){
     
     char retornar[]= "";
 
+    char buffer[500];
+
     char credito_temporario[500] = "";
+
+    char cep_temporario[10] = "";
 
     printf("Sistema de cadastro\n");
     printf("Preencha o campo de informações: \n");
+
     printf("Digite o seu nome: \n");
-    scanf("%*c");
-    fgets(funcionario.nome, sizeof(funcionario.nome), stdin);
-    remover_quebra_linha(funcionario.nome);
+    scanf(" %[^\n]", funcionario.nome);
+
     printf("Digite o seu CPF (cujo esse será seu identificador): \n");
     scanf("%s", funcionario.cpf);
+
     printf("Digite o seu limite de crédito: \n");
-    scanf("%*c");
-    fgets(credito_temporario, sizeof(credito_temporario), stdin);
-    remover_quebra_linha(credito_temporario);
+    scanf(" %[^\n]", credito_temporario);
+    funcionario.credito = atof(credito_temporario);
+
     printf("Digite o seu endereço: \n");
-    fgets(funcionario.endereco, sizeof(funcionario.endereco), stdin);
-    remover_quebra_linha(funcionario.endereco);
+    scanf(" %[^\n]", funcionario.endereco);
+
     printf("Digite o seu cep: \n");
-    scanf("%*c");
-    fgets(funcionario.cep, sizeof(funcionario.cep), stdin);
-    remover_quebra_linha(funcionario.cep);
+    scanf(" %s", funcionario.cep);
+
     printf("Digite a sua cidade: \n");
-    scanf("%*c");
-    fgets(funcionario.cidade, sizeof(funcionario.cidade), stdin);
-    remover_quebra_linha(funcionario.cidade);
+    scanf(" %19[^\n]", funcionario.cidade);
+
     printf("Digite o estado em que mora: \n");
     scanf("%s", funcionario.estado);
 
@@ -141,6 +144,8 @@ int main(){
         printf("Bem-vindo ao sistema de funcionários da Hells Market!\n");
         printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n2 - Excluir Cadastro\n->");
         scanf("%d", &escolha);
+
+        while (getchar() != '\n');
 
 
         if (escolha == 1){
