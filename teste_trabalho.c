@@ -97,7 +97,7 @@ void excluir_cadastro(){
     arquivo = fopen("funcionarios.txt", "r+");
     temporario = fopen("temp.txt", "w+");
 
-    char cpf_buscar[14] = "";
+    char cpf_buscar[16] = "";
 
     printf("Digite o seu CPF: \n");
     scanf("%s", cpf_buscar);
@@ -109,7 +109,7 @@ void excluir_cadastro(){
     int encontrou = 0;
 
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char cpf_atual[14];
+        char cpf_atual[16];
         char nome[100];
         
         sscanf(linha, "%99[^,],%15[^,],", nome, cpf_atual);
