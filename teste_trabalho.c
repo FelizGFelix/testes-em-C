@@ -49,7 +49,7 @@ void cadastrar(){
     fgets(funcionario.nome, sizeof(funcionario.nome), stdin);
     remover_quebra_linha(funcionario.nome);
     printf("Digite o seu CPF (cujo esse será seu identificador): \n");
-    scanf("%s", funcionario.cpf, stdin);
+    scanf("%s", funcionario.cpf);
     printf("Digite o seu limite de crédito: \n");
     scanf("%*c");
     fgets(credito_temporario, sizeof(credito_temporario), stdin);
@@ -66,7 +66,7 @@ void cadastrar(){
     fgets(funcionario.cidade, sizeof(funcionario.cidade), stdin);
     remover_quebra_linha(funcionario.cidade);
     printf("Digite o estado em que mora: \n");
-    scanf("%s", funcionario.estado, stdin);
+    scanf("%s", funcionario.estado);
 
     funcionario.credito = atof(credito_temporario);
 
@@ -92,7 +92,7 @@ void excluir_cadastro(){
     char retornar[] = "";
     FILE *arquivo, *temporario;
     arquivo = fopen("funcionarios.txt", "r+");
-    temporario = fopen("temp.txt", "w");
+    temporario = fopen("temp.txt", "w+");
 
     char cpf_buscar[14] = "";
 
@@ -102,9 +102,19 @@ void excluir_cadastro(){
 
     struct ficha_funcionario listar;
 
-    while(fread(&listar, sizeof(struct ficha_funcionario), 1, arquivo) == 1){
-        if (cpf_buscar != listar.cpf){
-            fwrite(&listar, sizeof(struct ficha_funcionario), 1, temporario);
+    char linha[500];
+    int encontrou = 0;
+
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char cpf_atual[14];
+        char nome[100];
+        
+        sscanf(linha, "%[^,],%[^,],", nome, cpf_atual);
+        
+        if (strcmp(cpf_buscar, cpf_atual) != 0) {
+            fprintf(temporario, "%s", linha);
+        } else {
+            encontrou = 1;
         }
     }
 
