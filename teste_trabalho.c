@@ -134,6 +134,86 @@ void excluir_cadastro(){
 
 }
 
+void alterar_cadastro(){
+limpar();
+char retornar[] = "";
+FILE *arquivo, *temporario;
+arquivo = fopen("funcionarios.txt", "r");
+temporario = fopen("temp.txt", "w");
+
+char cpf_buscar[16] = "";
+
+printf("Digite o CPF do cadastro que deseja alterar: \n");
+scanf("%15s", cpf_buscar);
+
+char linha[500];
+int encontrou = 0;
+
+while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+char cpf_atual[16];
+char nome[100];
+
+sscanf(linha, "%99[^,],%15[^,],", nome, cpf_atual);
+
+if (strcmp(cpf_buscar, cpf_atual) != 0) {
+fprintf(temporario, "%s", linha);
+} else {
+encontrou = 1;
+
+struct ficha_funcionario funcionario;
+char credito_temporario[500] = "";
+
+strcpy(funcionario.cpf, cpf_atual);
+
+printf("Cadastro encontrado! Digite os novos dados: \n");
+
+printf("Digite o novo nome: \n");
+scanf(" %99[^\n]", funcionario.nome);
+
+printf("Digite o novo limite de crédito: \n");
+scanf(" %[^\n]", credito_temporario);
+funcionario.credito = atof(credito_temporario);
+
+printf("Digite o novo endereço: \n");
+scanf(" %99[^\n]", funcionario.endereco);
+
+printf("Digite o novo cep: \n");
+scanf(" %15s", funcionario.cep);
+
+printf("Digite a nova cidade: \n");
+scanf(" %19[^\n]", funcionario.cidade);
+
+printf("Digite o novo estado: \n");
+scanf("%2s", funcionario.estado);
+
+fprintf(temporario, "%s,", funcionario.nome);
+fprintf(temporario, "%s,", funcionario.cpf);
+fprintf(temporario, "%f,", funcionario.credito);
+fprintf(temporario, "%s,", funcionario.endereco);
+fprintf(temporario, "%s,", funcionario.cep);
+fprintf(temporario, "%s,", funcionario.cidade);
+fprintf(temporario, "%s", funcionario.estado);
+fprintf(temporario, "%s", "\n");
+        }
+    }
+
+fclose(temporario);
+fclose(arquivo);
+
+remove("funcionarios.txt");
+rename("temp.txt", "funcionarios.txt");
+
+if (!encontrou) {
+printf("CPF não encontrado!\n");
+} else {
+printf("Cadastro alterado com sucesso!\n");
+    }
+
+printf("Digite qualquer valor para retornar: ");
+scanf("%s", retornar);
+limpar();
+}
+
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
@@ -142,7 +222,7 @@ int main(){
 
     while (true){
         printf("Bem-vindo ao sistema de funcionários da Hells Market!\n");
-        printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n2 - Excluir Cadastro\n->");
+        printf("Escolha uma das opções:\n1 - Cadastrar Funcionário \n2 - Excluir Cadastro\n3 - Alterar Cadastro\n->");
         scanf("%d", &escolha);
 
         while (getchar() != '\n');
@@ -154,6 +234,10 @@ int main(){
 
         else if (escolha == 2){
             excluir_cadastro();
+        }
+
+        else if (escolha == 3){
+            alterar_cadastro();
         }
 
     }
